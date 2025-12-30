@@ -1,5 +1,4 @@
 const Tenant = require('../models/Tenant');
-const UsageLog = require('../models/UsageLog');
 
 // @desc    Get tenant info (public/protected mix)
 // @route   GET /api/tenant/info
@@ -40,14 +39,6 @@ const updateBranding = async (req, res) => {
         else if (logoUrl) tenant.logoUrl = logoUrl; // Fallback to string if passed directly
 
         await tenant.save();
-
-        // Log Usage
-        await UsageLog.create({
-            tenantId: tenant._id,
-            userId: req.user._id,
-            action: 'UPDATE_BRANDING',
-            details: `Updated branding: Color ${themeColor || 'kept'}, Logo ${req.file ? 'updated' : 'kept'}`,
-        });
 
         res.json(tenant);
     } catch (error) {

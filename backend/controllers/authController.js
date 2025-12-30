@@ -1,6 +1,5 @@
 const User = require('../models/User');
 const Tenant = require('../models/Tenant');
-const UsageLog = require('../models/UsageLog');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -110,14 +109,6 @@ const loginUser = async (req, res) => {
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn: '7d',
-        });
-
-        // Log Usage
-        await UsageLog.create({
-            tenantId: user.tenantId,
-            userId: user._id,
-            action: 'LOGIN',
-            details: `User ${user.name} logged in`,
         });
 
         res.json({

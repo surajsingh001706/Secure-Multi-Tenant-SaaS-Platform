@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { TenantContext } from '../context/TenantContext';
 import API from '../services/api';
 
@@ -6,13 +6,6 @@ const Settings = () => {
     const { tenant, refreshTenant } = useContext(TenantContext);
     const [themeColor, setThemeColor] = useState(tenant?.themeColor || '#3b82f6');
     const [file, setFile] = useState(null);
-
-    // Sync state with tenant info
-    useEffect(() => {
-        if (tenant?.themeColor) {
-            setThemeColor(tenant.themeColor);
-        }
-    }, [tenant]);
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -70,11 +63,7 @@ const Settings = () => {
                         </div>
                     )}
 
-                    <button
-                        type="submit"
-                        className="text-white px-4 py-2 rounded hover:opacity-90 transition-opacity"
-                        style={{ backgroundColor: themeColor }}
-                    >
+                    <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                         Save Changes
                     </button>
                 </form>
